@@ -15,6 +15,8 @@ app.use(express.json());
 
 const myConnString = 'mongodb+srv://fredboi1101:ZqVena@cluster0.rpowa.mongodb.net/mydatabase?retryWrites=true&w=majority';
 mongoose.connect(myConnString, { useNewUrlParser: true, useCreateIndex: true });
+
+
 const Schema = mongoose.Schema;
 const exerciseSchema = new Schema({
     username: { type: String, required: true },
@@ -24,6 +26,8 @@ const exerciseSchema = new Schema({
 }, {
     timestamps: true,
 });
+
+// const 
 
 
 const connection = mongoose.connection;
@@ -54,6 +58,29 @@ app.post('/exercises/add', (req,res)=>{
     res.send('data recieved');
 })
 
+app.get('/excercise/add/:id',(req,res)=>{
+    console.log(req.params.id);
+
+    exer.findById(req.params.id,(err,data)=>{
+        res.json(data);
+    })
+})
+
+app.put('/excercise/add/:id',(req,res)=>{
+    exer.findByIdAndUpdate(req.params.id,
+        req.body, {new:true},
+        (err,data)=>{
+
+        })
+})
+
+app.delete('/excercise/add/:id',(req,res)=>{
+
+    exer.findByIdAndDelete({_id:req.params.id},
+        (err,data)=>{
+            res.send(data)
+        })
+})
 
 app.use('/users', usersRoute);
 
